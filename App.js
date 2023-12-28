@@ -1,44 +1,25 @@
 import "react-native-gesture-handler";
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import CarsPage from "./src/pages/CarsPage";
-import CarStack from "./src/pages/CarsStack";
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button
-        onPress={() => navigation.navigate("Notifications")}
-        title="Go to notifications"
-      />
-    </View>
-  );
-}
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-
-const Drawer = createDrawerNavigator();
+import { StyleSheet } from "react-native";
+import { AuthProvider } from "./src/Provider/AuthProvider";
+import Navigation from "./src/pages/Navigation";
+import { Provider } from "react-redux";
+import store from "./src/store/store";
+import axios from "axios";
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen name="Home" component={HomeScreen} />
-        <Drawer.Screen name="Cars page" component={CarStack} />
-        <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      </Drawer.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
   );
 }
 
+/*<AuthProvider>
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    </AuthProvider> */
 /*
 <Stack.Navigator>
   <Stack.Screen
@@ -59,3 +40,61 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 });
+
+/*
+
+const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "RRESTORE_TOKEN":
+          return {
+            ...prevState,
+            userToken: action.token,
+            isLoading: false,
+          };
+        case "SIGN_IN":
+          return {
+            ...prevState,
+            isSignout: false,
+            userToken: action.token,
+          };
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            isSignout: true,
+            userToken: null,
+          };
+      }
+    },
+    {
+      isLoading: true,
+      isSignout: false,
+      userToken: null,
+    }
+  );
+
+  React.useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken;
+      try {
+      } catch (e) {}
+
+      dispatch({ type: "RESTORE_TOKEN", token: userToken });
+    };
+
+    bootstrapAsync();
+  }, []);
+
+  const authContenx = React.useMemo(
+    () => ({
+      signIn: async (data) => {
+        dispatch({ type: "SIGN_IN", token: "dummy-auth-token" });
+      },
+      signOut: () => dispatch({ type: "SIGN_OUT" }),
+      signUp: async (data) => {
+        dispatch({ type: "SIGN_IN", token: "dumy-auth-token" });
+      },
+    }),
+    []
+  );
+*/

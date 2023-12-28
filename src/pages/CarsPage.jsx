@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Button } from "react-native";
 import CarList from "../components/Car/CarList";
+import config from "../../config";
+import axiosInstance from "../utils/axiosConfig";
 
 const styles = StyleSheet.create({
   container: {
@@ -61,18 +63,15 @@ function CarsPage({ navigation }) {
     setIsLoading(true);
     const queryString = transformObjectToQueryString(filterInfo);
 
-    //fetch(`https://192.168.0.104:44363/car/cars?${queryString}`)
-    fetch(`http://192.168.0.104:19035/car/cars?${queryString}`)
+    //fetch(`https://192.168.0.104:44363/car/cars?${queryString}`)r
+
+    //axios.get()
+    axiosInstance
+      .get(`/car/cars?${queryString}`)
       .then((response) => {
-        if (!response.ok) {
-          throw new Error("An Error");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data.items);
-        setCars(data.items);
-        setMetaData(data.metaData);
+        console.log(response.data);
+        setCars(response.data.items);
+        setMetaData(response.data.items);
       })
       .catch((error) => {
         console.log(error);
@@ -81,6 +80,26 @@ function CarsPage({ navigation }) {
       .finally(() => {
         setIsLoading(false);
       });
+
+    // fetch(`${config.API_URL}/car/cars?${queryString}`)
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("An Error");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     console.log(data.items);
+    //     setCars(data.items);
+    //     setMetaData(data.metaData);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     setCars([]);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   const getData = () => {
