@@ -40,7 +40,7 @@ export default function Navigation() {
         <NavigationContainer>
           <Drawer.Navigator initialRouteName="Home">
             <Drawer.Screen name="Home" component={HomeScreen} />
-            <Drawer.Screen name="Cars page" component={CarStack} />
+            <Drawer.Screen name="Cars" component={CarStack} />
             <Drawer.Screen
               name="Notifications"
               component={NotificationsScreen}

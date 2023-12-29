@@ -2,14 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import UserRental from "../components/User/UserRental";
-
-function UserRentals() {
-  return (
-    <View>
-      <Text>Rentals</Text>
-    </View>
-  );
-}
+import ChangeAddress from "../components/User/ChangeAddress";
 
 function AccountManagment() {
   return (
@@ -81,7 +74,7 @@ const MyComponent = () => {
       <View style={{ flex: 10 }}>
         {view === "UserRentals" && <UserRental />}
         {view === "Account" && <AccountManagment />}
-        {view === "Address" && <Address />}
+        {view === "Address" && <ChangeAddress />}
         {view === "SecondRoute" && <SecondRoute />}
       </View>
     </View>

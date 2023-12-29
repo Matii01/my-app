@@ -1,10 +1,7 @@
 import React from "react";
-import { View, Text, FlatList, Image, StyleSheet, Button } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { View, Text, Image, StyleSheet, Button } from "react-native";
 
 const CarList = ({ cars, navigation }) => {
-  console.log("cars: ");
-  console.log(cars);
   const renderList = ({ car }) => {
     <View style={styles.carItem}>
       <Image source={{ uri: car.pictureUrl }} style={styles.image} />
@@ -26,14 +23,11 @@ const CarList = ({ cars, navigation }) => {
         <Text style={styles.name}>{car.name}</Text>
         <Button title="Details" onPress={() => goToDetails(car.id)} />
       </View>
+      <View></View>
     </View>
   ));
 
-  return (
-    <>
-      <ScrollView>{list}</ScrollView>
-    </>
-  );
+  return <View>{list}</View>;
 };
 
 const styles = StyleSheet.create({

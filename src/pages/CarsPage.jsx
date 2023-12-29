@@ -3,6 +3,10 @@ import { View, Text, Image, StyleSheet, Button } from "react-native";
 import CarList from "../components/Car/CarList";
 import config from "../../config";
 import axiosInstance from "../utils/axiosConfig";
+import { ScrollView } from "react-native-gesture-handler";
+import CarFilter from "../components/Filters/CarFilters";
+import Dropdown from "../components/Dropdown/Dropdown";
+import Pagination from "../components/Pagination/Pagination";
 
 const styles = StyleSheet.create({
   container: {
@@ -20,10 +24,9 @@ const styles = StyleSheet.create({
 
 function CarsPage({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [metaData, setMetaData] = useState();
   const [cars, setCars] = useState([]);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [isGridView, setIsGridView] = useState(true);
   const [filterInfo, setFilterInfo] = useState({
     PageNumber: 1,
     PageSize: 10,
@@ -42,6 +45,10 @@ function CarsPage({ navigation }) {
   useEffect(() => {
     getFilteredCars();
   }, []);
+
+  useEffect(() => {
+    getFilteredCars();
+  }, [filterInfo.PageNumber, filterInfo.PageSize]);
 
   const transformObjectToQueryString = (object) => {
     const obectToString = Object.entries(object)
@@ -69,9 +76,8 @@ function CarsPage({ navigation }) {
     axiosInstance
       .get(`/car/cars?${queryString}`)
       .then((response) => {
-        console.log(response.data);
         setCars(response.data.items);
-        setMetaData(response.data.items);
+        setMetaData(response.data.metaData);
       })
       .catch((error) => {
         console.log(error);
@@ -82,6 +88,37 @@ function CarsPage({ navigation }) {
       });
   };
 
+  const filterClick = (params) => {
+    getFilteredCars(params);
+  };
+
+  const handlePageSizeChange = (value) => {
+    console.log(value);
+    setFilterInfo((prevState) => ({
+      ...prevState,
+      PageSize: value,
+    }));
+  };
+
+  const onPageChange = (pageNumber) => {
+    console.log("object");
+    setFilterInfo((prevState) => ({
+      ...prevState,
+      PageNumber: pageNumber,
+    }));
+  };
+
+  const options = [
+    { label: "2", value: "2" },
+    { label: "5", value: "5" },
+    { label: "10", value: "10" },
+    { label: "20", value: "20" },
+  ];
+
+  const toggleFilter = () => {
+    setIsFilterOpen(!isFilterOpen);
+  };
+
   if (isLoading) {
     return (
       <View>
@@ -89,26 +126,57 @@ function CarsPage({ navigation }) {
       </View>
     );
   }
-  return <CarList cars={cars} navigation={navigation} />;
-}
-export default CarsPage;
 
-// fetch(`${config.API_URL}/car/cars?${queryString}`)
-//   .then((response) => {
-//     if (!response.ok) {
-//       throw new Error("An Error");
-//     }
-//     return response.json();
-//   })
-//   .then((data) => {
-//     console.log(data.items);
-//     setCars(data.items);
-//     setMetaData(data.metaData);
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//     setCars([]);
-//   })
-//   .finally(() => {
-//     setIsLoading(false);
-//   });
+  return (
+    <ScrollView>
+      <View
+        style={[
+          row.container,
+          {
+            flexDirection: "column",
+            flexDirection: "row",
+          },
+        ]}
+      >
+        <View style={row.col1}>
+          <Button title="=" onPress={toggleFilter} />
+        </View>
+        <View style={row.col1}></View>
+        <View style={row.col2}>
+          <Dropdown
+            title="On Page"
+            onChange={handlePageSizeChange}
+            options={options}
+            currentValue={filterInfo.PageSize}
+          />
+        </View>
+      </View>
+      {isFilterOpen && (
+        <CarFilter
+          filterInfo={filterInfo}
+          setFilterInfo={setFilterInfo}
+          applayFilterClick={filterClick}
+        />
+      )}
+      <CarList cars={cars} navigation={navigation} />
+      <Pagination paginationData={metaData} pageChange={onPageChange} />
+    </ScrollView>
+  );
+}
+
+const row = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+  },
+  col1: {
+    flex: 2,
+    justifyContent: "center",
+  },
+  col2: {
+    justifyContent: "center",
+    alignContent: "center",
+  },
+});
+
+export default CarsPage;
