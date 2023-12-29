@@ -26,10 +26,15 @@ function LoginPage() {
       body: JSON.stringify(loginData),
     });
 
-    const data = await response.json();
-    await SecureStore.setItemAsync("accessToken", data.token.accessToken);
-    await SecureStore.setItemAsync("refreshToken", data.token.refreshToken);
-    dispatch(actions.setTokens({ ...data.token }));
+    try {
+      const data = await response.json();
+      console.log(data);
+      await SecureStore.setItemAsync("accessToken", data.token.accessToken);
+      await SecureStore.setItemAsync("refreshToken", data.token.refreshToken);
+      dispatch(actions.setTokens({ ...data.token }));
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

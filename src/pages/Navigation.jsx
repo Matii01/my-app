@@ -6,6 +6,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CarStack from "./CarsStack";
 import LoginPage from "./LoginPage";
 import { useSelector } from "react-redux";
+import UserPage from "./UserPage";
+import MyComponent from "./TestPage";
 
 function HomeScreen({ navigation }) {
   return (
@@ -43,6 +45,8 @@ export default function Navigation() {
               name="Notifications"
               component={NotificationsScreen}
             />
+            <Drawer.Screen name="Account" component={UserPage} />
+            <Drawer.Screen name="Test" component={MyComponent} />
           </Drawer.Navigator>
         </NavigationContainer>
       ) : (

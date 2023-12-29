@@ -4,6 +4,7 @@ import { signIn } from "./authThunk";
 const authSlice = createSlice({
   name: "auth",
   initialState: {
+    userName: "",
     accessToken: null,
     refreshToken: null,
     loading: false,

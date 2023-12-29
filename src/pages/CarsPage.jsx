@@ -80,32 +80,6 @@ function CarsPage({ navigation }) {
       .finally(() => {
         setIsLoading(false);
       });
-
-    // fetch(`${config.API_URL}/car/cars?${queryString}`)
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("An Error");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     console.log(data.items);
-    //     setCars(data.items);
-    //     setMetaData(data.metaData);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     setCars([]);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
-  };
-
-  const getData = () => {
-    fetch(``).then((response) => {
-      console.log("object");
-    });
   };
 
   if (isLoading) {
@@ -118,3 +92,23 @@ function CarsPage({ navigation }) {
   return <CarList cars={cars} navigation={navigation} />;
 }
 export default CarsPage;
+
+// fetch(`${config.API_URL}/car/cars?${queryString}`)
+//   .then((response) => {
+//     if (!response.ok) {
+//       throw new Error("An Error");
+//     }
+//     return response.json();
+//   })
+//   .then((data) => {
+//     console.log(data.items);
+//     setCars(data.items);
+//     setMetaData(data.metaData);
+//   })
+//   .catch((error) => {
+//     console.log(error);
+//     setCars([]);
+//   })
+//   .finally(() => {
+//     setIsLoading(false);
+//   });
