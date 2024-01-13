@@ -12,7 +12,6 @@ const CarList = ({ cars, navigation }) => {
   };
 
   const goToDetails = (id) => {
-    console.log(id);
     navigation.navigate("CarDetails", { carId: id });
   };
 

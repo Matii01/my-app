@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Button } from "react-native";
 import CarList from "../components/Car/CarList";
-import config from "../../config";
 import axiosInstance from "../utils/axiosConfig";
 import { ScrollView } from "react-native-gesture-handler";
 import CarFilter from "../components/Filters/CarFilters";
@@ -69,8 +68,6 @@ function CarsPage({ navigation }) {
   const getFilteredCars = () => {
     setIsLoading(true);
     const queryString = transformObjectToQueryString(filterInfo);
-
-    //fetch(`https://192.168.0.104:44363/car/cars?${queryString}`)r
 
     //axios.get()
     axiosInstance
