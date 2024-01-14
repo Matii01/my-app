@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import MyDatePicker from "../DatePicker/MyDatePicker";
 import transformObjectToQueryString from "./../../utils/transformObjectToQueryString";
 import axiosInstance from "../../utils/axiosConfig";
@@ -99,12 +99,23 @@ function BookCar({ carId, excludedDates, navigation }) {
           />
         </View>
         <View>{cost && <Text>Price: {cost}</Text>}</View>
-        <View>
+        <View style={styles.row}>
           <Button onPress={onSubmit} title="Book" disabled={error == true} />
         </View>
       </View>
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 0,
+  },
+  row: {
+    margin: 4,
+    padding: 2,
+  },
+});
 
 export default BookCar;

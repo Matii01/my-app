@@ -1,6 +1,6 @@
 import DateTimePicker from "@react-native-community/datetimepicker";
 import React, { useState } from "react";
-import { View, Button, Platform } from "react-native";
+import { View, Button, Platform, StyleSheet } from "react-native";
 
 const MyDatePicker = ({ onChange, excludedDate, onBlur }) => {
   const [startDate, setStartDate] = useState(new Date());
@@ -30,9 +30,10 @@ const MyDatePicker = ({ onChange, excludedDate, onBlur }) => {
   };
 
   return (
-    <View>
-      <View>
+    <View style={styles.container}>
+      <View style={styles.row}>
         <Button
+          style={styles.btn}
           onPress={() => setShowStartPicker(true)}
           title="Select Start Date"
         />
@@ -40,8 +41,9 @@ const MyDatePicker = ({ onChange, excludedDate, onBlur }) => {
           <DateTimePicker value={startDate} onChange={onStartDateChange} />
         )}
       </View>
-      <View>
+      <View style={styles.row}>
         <Button
+          style={styles.btn}
           onPress={() => setShowEndPicker(true)}
           title="Select End Date"
         />
@@ -52,5 +54,28 @@ const MyDatePicker = ({ onChange, excludedDate, onBlur }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 0,
+  },
+  row: {
+    margin: 4,
+    padding: 2,
+  },
+  col: {
+    alignSelf: "center",
+    textAlign: "center",
+    alignItems: "center",
+  },
+  btn: {
+    width: "100%",
+    padding: 5,
+    margin: 5,
+    backgroundColor: "red",
+    borderCurve: "circular",
+  },
+});
 
 export default MyDatePicker;

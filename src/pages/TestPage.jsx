@@ -3,22 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import UserRental from "../components/User/UserRental";
 import ChangeAddress from "../components/User/ChangeAddress";
-
-function AccountManagment() {
-  return (
-    <View>
-      <Text>AccountManagment</Text>
-    </View>
-  );
-}
-
-function Address() {
-  return (
-    <View>
-      <Text>Address</Text>
-    </View>
-  );
-}
+import AccountManagment from "../components/User/AccountManagment";
 
 function SecondRoute() {
   return (

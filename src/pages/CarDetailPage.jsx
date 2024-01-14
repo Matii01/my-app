@@ -29,26 +29,26 @@ function CarDetails({ route, navigation }) {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.container}>
         <View>
           <Image source={{ uri: car.pictureUrl }} style={styles.image} />
         </View>
-        <View>
-          <View>
+        <View style={styles.row}>
+          <View style={styles.col}>
             <TechDetailCard
               title={car.ac}
               subtitle={"klimatyzacja"}
               icon={"rocket"}
             />
           </View>
-          <View>
+          <View style={styles.col}>
             <TechDetailCard
               title={car.engine}
               subtitle={"silnik"}
               icon={"rocket"}
             />
           </View>
-          <View>
+          <View style={styles.col}>
             <TechDetailCard
               title={car.gearbox}
               subtitle={"skrzynia biegów"}
@@ -56,7 +56,7 @@ function CarDetails({ route, navigation }) {
             />
           </View>
         </View>
-        <View>
+        <View style={styles.row}>
           <Text>{car.description}</Text>
         </View>
         <View>
@@ -80,6 +80,22 @@ function CarDetails({ route, navigation }) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 0,
+  },
+  row: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    marginTop: 5,
+    alignSelf: "center",
+  },
+  col: {
+    alignSelf: "center",
+    textAlign: "center",
+    alignItems: "center",
+    width: "33%",
+  },
   image: {
     width: 360,
     height: 200,

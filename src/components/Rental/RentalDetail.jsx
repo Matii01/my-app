@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { CardField, useStripe } from "@stripe/stripe-react-native";
 import { useState } from "react";
 import RentalData from "./RentalData";
@@ -31,7 +31,7 @@ function RentalDetail({ reservation }) {
 
   return (
     <ScrollView>
-      <View>
+      <View style={styles.row}>
         <RentalData
           allRentalData={allRentalData}
           setAllRentalData={setAllRentalData}
