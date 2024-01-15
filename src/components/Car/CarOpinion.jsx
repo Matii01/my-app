@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
+import { Card, Text, MD3Colors, Icon } from "react-native-paper";
 import axiosInstance from "../../utils/axiosConfig";
 
 function CarOpinionList({ carId }) {
@@ -21,41 +22,44 @@ function CarOpinionList({ carId }) {
 
   return (
     <>
-      <View style={styles.container}>
+      <View>
+        <Text variant="displaySmall" style={{ margin: 10, marginTop: 25 }}>
+          Opinion
+        </Text>
         {list.map((item) => (
-          <View key={item.id} style={styles.tableRow}>
-            <View style={styles.tableCell}>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.userName}</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>
-                  {formatDate(item.addedDate)}
-                </Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.title}</Text>
-                <Text style={styles.tableCell}>{item.mark}</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.text}</Text>
-              </View>
-            </View>
-          </View>
+          <Card key={item.id} style={{ margin: 5, marginBottom: 50 }}>
+            <Card.Title
+              title={item.userName}
+              subtitle={formatDate(item.addedDate)}
+              right={() => <Stars number={item.mark} />}
+            />
+            <Card.Content>
+              <Text variant="titleLarge">{item.title}</Text>
+              <Text variant="bodyMedium">{item.text}</Text>
+            </Card.Content>
+          </Card>
         ))}
       </View>
     </>
   );
 }
 
-function GenrateStars({ number }) {
+function Stars({ number }) {
   const stars = [];
 
   for (let i = 0; i < number; i++) {
-    stars.push(<i key={i} className="fa-regular fa-star"></i>);
+    stars.push(
+      <Icon key={i} source="star" color={MD3Colors.error50} size={15} />
+    );
   }
 
-  return <div>{stars}</div>;
+  return (
+    <View
+      style={{ flex: 1, flexDirection: "row", marginTop: 15, marginEnd: 15 }}
+    >
+      {stars}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

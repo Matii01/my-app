@@ -1,16 +1,23 @@
 import React from "react";
+import { View } from "react-native";
+import CarCardForList from "./CarCardForList";
+
+const CarList = ({ cars, navigation }) => {
+  const list = cars.map((car) => (
+    <View key={car.id} style={{ marginBottom: 10 }}>
+      <CarCardForList car={car} navigation={navigation} />
+    </View>
+  ));
+
+  return <View>{list}</View>;
+};
+
+export default CarList;
+
+/**import React from "react";
 import { View, Text, Image, StyleSheet, Button } from "react-native";
 
 const CarList = ({ cars, navigation }) => {
-  const renderList = ({ car }) => {
-    <View style={styles.carItem}>
-      <Image source={{ uri: car.pictureUrl }} style={styles.image} />
-      <View>
-        <Text style={styles.name}>{car.name}</Text>
-      </View>
-    </View>;
-  };
-
   const goToDetails = (id) => {
     navigation.navigate("CarDetails", { carId: id });
   };
@@ -50,3 +57,4 @@ const styles = StyleSheet.create({
 });
 
 export default CarList;
+ */

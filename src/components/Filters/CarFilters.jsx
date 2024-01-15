@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Button, Text } from "react-native-paper";
 import axiosInstance from "../../utils/axiosConfig";
 import MyAccordion from "../AccordionComponent/MyAccordion";
 import Checkbox from "../Checkbox/Checkbox";

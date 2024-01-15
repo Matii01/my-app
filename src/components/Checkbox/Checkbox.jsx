@@ -9,16 +9,7 @@ function Checkbox({ text, onPress }) {
     onPress();
   };
 
-  return (
-    <View>
-      <TouchableOpacity
-        style={(styles.checkboxContainer, isCheck && styles.activeBorder)}
-        onPress={onClick}
-      >
-        <Text style={styles.checkboxLabel}>{text}</Text>
-      </TouchableOpacity>
-    </View>
-  );
+  return <View></View>;
 }
 
 const styles = StyleSheet.create({

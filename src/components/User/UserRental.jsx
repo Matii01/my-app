@@ -28,7 +28,7 @@ function UserRental() {
     axiosInstance
       .get(`/rental/UserRental/${id}`)
       .then((data) => {
-        console.log(data);
+        console.log(data.data);
         setRentalDetailData(data.data);
         setShowDetails(true);
       })

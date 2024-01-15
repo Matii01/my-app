@@ -90,7 +90,7 @@ function BookCar({ carId, excludedDates, navigation }) {
 
   return (
     <>
-      <View>
+      <View style={{ height: 100 }}>
         <View>
           <MyDatePicker
             onBlur={isDatesValid}

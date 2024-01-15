@@ -31,7 +31,7 @@ function RentalDetail({ reservation }) {
 
   return (
     <ScrollView>
-      <View style={styles.row}>
+      <View>
         <RentalData
           allRentalData={allRentalData}
           setAllRentalData={setAllRentalData}

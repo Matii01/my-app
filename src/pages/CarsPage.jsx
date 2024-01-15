@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet, Button } from "react-native";
+import { View, Text, Image, StyleSheet } from "react-native";
+import { Button, ToggleButton } from "react-native-paper";
 import CarList from "../components/Car/CarList";
 import axiosInstance from "../utils/axiosConfig";
 import { ScrollView } from "react-native-gesture-handler";
@@ -136,7 +137,9 @@ function CarsPage({ navigation }) {
         ]}
       >
         <View style={row.col1}>
-          <Button title="=" onPress={toggleFilter} />
+          <Button mode="contained" onPress={toggleFilter}>
+            =
+          </Button>
         </View>
         <View style={row.col1}></View>
         <View style={row.col2}>
