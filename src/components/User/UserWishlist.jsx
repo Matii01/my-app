@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, Text, Image, Button, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, ScrollView } from "react-native";
+import { Button, Card, Text, Surface, Divider } from "react-native-paper";
+
 import axiosInstance from "../../utils/axiosConfig";
 
-function UserWishList() {
+function UserWishList({ navigation }) {
   const [list, setList] = useState([]);
   useEffect(() => {
     axiosInstance
@@ -17,12 +19,12 @@ function UserWishList() {
   }, []);
 
   const goToDetails = (id) => {
-    console.log("go to details: " + id);
+    navigation.navigate("CarDetails", { carId: id });
   };
 
   const removeFromList = (id) => {
     axiosInstance
-      .delete(`https://localhost:7091/Wishlist/${id}`)
+      .delete(`Wishlist/${id}`)
       .then((data) => {
         const newList = list.filter((it) => it.carId != id);
         setList(newList);
@@ -32,20 +34,23 @@ function UserWishList() {
       });
   };
 
-  const renderedList = list.map((item) => (
-    <View key={item.car.id} style={styles.carItem}>
-      <Image source={{ uri: item.car.pictureUrl }} style={styles.image} />
-      <View>
-        <Text style={styles.name}>{item.car.name}</Text>
-        <Button title="Details" onPress={() => goToDetails(item.car.id)} />
-      </View>
-      <View></View>
-    </View>
-  ));
-
   return (
     <>
-      <View>{renderedList}</View>
+      <ScrollView>
+        {list.map((item) => (
+          <Card key={item.car.id} style={{ margin: 10 }}>
+            <Card.Cover
+              source={{ uri: item.car.pictureUrl }}
+              style={{ margin: 10 }}
+            />
+            <Card.Title title={item.car.name} />
+            <Card.Actions>
+              <Button onPress={removeFromList}>Remove </Button>
+              <Button onPress={() => goToDetails(item.car.id)}>Details</Button>
+            </Card.Actions>
+          </Card>
+        ))}
+      </ScrollView>
     </>
   );
 }

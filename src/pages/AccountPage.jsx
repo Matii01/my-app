@@ -60,7 +60,7 @@ const MyComponent = ({ navigation }) => {
         {view === "UserRentals" && <UserRental />}
         {view === "Account" && <AccountManagment />}
         {view === "Address" && <ChangeAddress />}
-        {view === "Wishlist" && <UserWishList />}
+        {view === "Wishlist" && <UserWishList navigation={navigation} />}
       </View>
     </View>
   );
