@@ -1,14 +1,24 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { Button, Card, Text, Divider } from "react-native-paper";
 import AddCarOpinion from "./AddCarOpinion";
+
+function CardRow({ first, value }) {
+  return (
+    <>
+      <Divider bold style={{ marginTop: 2, marginBottom: 2 }} />
+      <View style={styles.row}>
+        <View style={styles.column1}>
+          <Text variant="headlineSmall">{first}</Text>
+        </View>
+        <View style={styles.column2}>
+          <Text variant="titleLarge">{value}</Text>
+        </View>
+      </View>
+      <Divider bold style={{ marginTop: 2, marginBottom: 2 }} />
+    </>
+  );
+}
 
 function UserRentalDetails({ onGoBackClick, rentalDetail }) {
   const [showAddOption, setShowAddOpinion] = useState(false);
@@ -22,48 +32,24 @@ function UserRentalDetails({ onGoBackClick, rentalDetail }) {
 
   return (
     <ScrollView style={styles.container}>
-      <View style={styles.row}>
-        <View style={styles.col}>
-          <Image source={{ uri: rentalDetail.carImg }} style={styles.image} />
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.col1}>
-          <Text style={styles.text}>From:</Text>
-        </View>
-        <View style={styles.col1}>
-          <Text style={styles.text}>
-            {formatDate(rentalDetail.rentalStart)}
-          </Text>
-        </View>
-      </View>
+      <Card>
+        <Card.Cover source={{ uri: rentalDetail.carImg }} />
+        <Card.Content>
+          <CardRow
+            first={"From"}
+            value={formatDate(rentalDetail.rentalStart)}
+          />
+          <CardRow first={"To"} value={formatDate(rentalDetail.rentalEnd)} />
+          <CardRow first={"Status"} value={rentalDetail.status} />
+          <CardRow first={"Price"} value={rentalDetail.totalPrice} />
+        </Card.Content>
+        <Card.Actions>
+          <Button onPress={onGoBackClick}>Go back</Button>
+          <Button onPress={() => setShowAddOpinion(true)}>Add opinion</Button>
+        </Card.Actions>
+      </Card>
+      <Divider />
 
-      <View style={styles.row}>
-        <View style={styles.col1}>
-          <Text style={styles.text}>To:</Text>
-        </View>
-        <View style={styles.col1}>
-          <Text style={styles.text}>{formatDate(rentalDetail.rentalEnd)}</Text>
-        </View>
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.col1}>
-          <Text style={styles.text}>Status</Text>
-        </View>
-        <View style={styles.col1}>
-          <Text style={styles.text}>{rentalDetail.status}</Text>
-        </View>
-      </View>
-
-      <View style={styles.row}>
-        <View style={styles.col1}>
-          <Text style={styles.text}>Price</Text>
-        </View>
-        <View style={styles.col1}>
-          <Text style={styles.text}>{rentalDetail.totalPrice}</Text>
-        </View>
-      </View>
       <View>
         <View>
           {showAddOption && (
@@ -73,21 +59,6 @@ function UserRentalDetails({ onGoBackClick, rentalDetail }) {
               onCancel={() => setShowAddOpinion(false)}
             />
           )}
-        </View>
-      </View>
-      <View style={styles.row}>
-        <View style={styles.col1}>
-          <TouchableOpacity style={styles.button} onPress={onGoBackClick}>
-            <Text>GoBack</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.col1}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setShowAddOpinion(true)}
-          >
-            <Text>Add opinion</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -100,37 +71,19 @@ const styles = StyleSheet.create({
   container: { marginBottom: 10 },
   row: {
     flexDirection: "row",
-    flexWrap: "wrap",
-  },
-  col: {
-    alignSelf: "center",
-    textAlign: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-  col1: {
-    alignSelf: "center",
-    textAlign: "center",
-    alignItems: "center",
-    width: "50%",
-  },
-  text: {
-    fontSize: 21,
-  },
-  btn: {
-    width: "90%",
-    width: 100,
-  },
-  button: {
-    backgroundColor: "#007bff",
-    width: "90%",
-    padding: 10,
-    borderRadius: 0,
-    alignItems: "center",
     justifyContent: "center",
+    alignItems: "center",
   },
-  image: {
-    width: "100%",
-    height: 200,
+  column1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+  },
+  column2: {
+    flex: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
   },
 });
