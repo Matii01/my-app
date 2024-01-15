@@ -5,9 +5,8 @@ import ChangePersonalDetails from "./ChangePersonalDetails";
 function AccountManagment() {
   return (
     <ScrollView>
-      <ChangePasword />
-      <Text>---------</Text>
-      <ChangePersonalDetails />
+      <ChangePasword style={{ margin: 5 }} />
+      <ChangePersonalDetails style={{ margin: 5, marginTop: 10 }} />
     </ScrollView>
   );
 }

@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import axiosInstance from "../../utils/axiosConfig";
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
 
-function ChangePasword() {
+function ChangePasword({ ...props }) {
   const [error, setError] = useState("");
   const [data, setData] = useState({
     oldPassword: "",
@@ -58,15 +59,14 @@ function ChangePasword() {
   };
 
   return (
-    <View>
-      <View style={styles.card}>
-        <Text style={styles.header}>Password</Text>
-        <View style={styles.body}>
+    <>
+      <Card {...props}>
+        <Card.Title title={"Password"} />
+        <Card.Content>
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>Old Password</Text>
               <TextInput
-                style={styles.input}
                 placeholder="Old Password"
                 value={data.oldPassword}
                 onChangeText={(value) => handleChange("oldPassword", value)}
@@ -77,7 +77,6 @@ function ChangePasword() {
             <View style={styles.inputGroup}>
               <Text>New Password</Text>
               <TextInput
-                style={styles.input}
                 placeholder="New Password"
                 value={data.newPassword}
                 onChangeText={(value) => handleChange("newPassword", value)}
@@ -89,17 +88,20 @@ function ChangePasword() {
             <View style={styles.inputGroup}>
               <Text>Retype Password</Text>
               <TextInput
-                style={styles.input}
                 placeholder="Retype Password"
                 value={data.retypePassword}
                 onChangeText={(value) => handleChange("retypePassword", value)}
               />
             </View>
           </View>
-          <Button title="Change password" onPress={onUpdateClick} />
-        </View>
-      </View>
-    </View>
+          <Card.Actions>
+            <Button mode="contained" onPress={onUpdateClick}>
+              Change password
+            </Button>
+          </Card.Actions>
+        </Card.Content>
+      </Card>
+    </>
   );
 }
 

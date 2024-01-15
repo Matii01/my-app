@@ -1,11 +1,7 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import { StyleSheet } from "react-native";
+import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
+
 import axiosInstance from "../../utils/axiosConfig";
 import Dropdown from "../Dropdown/Dropdown";
 
@@ -54,62 +50,41 @@ function AddCarOpinion({ onCancel, carId }) {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.card}>
-        <View style={styles.row}>
-          <View style={styles.col}>
-            <Text style={styles.header}>ADDRESS</Text>
-          </View>
-          <View style={styles.col}>
-            <TouchableOpacity onPress={onCancel}>
-              <Text>Hide</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.body}>
-          <View style={styles.row}>
-            <View style={styles.inputGroup}>
-              <Text>Title</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Title"
-                value={opinion.title}
-                onChangeText={(value) => handleChange("title", value)}
-              />
-            </View>
-          </View>
-
-          <View style={styles.row}>
-            <View style={styles.inputGroup}>
-              <Dropdown
-                title="Mark"
-                onChange={(value) => handleChange("mark", value)}
-                options={options}
-                currentValue={opinion.mark}
-              />
-            </View>
-          </View>
-
-          <View style={styles.row}>
-            <View style={styles.inputGroup}>
-              <Text>Opinion</Text>
-              <TextInput
-                style={styles.textarea}
-                multiline
-                numberOfLines={4}
-                placeholder="Your opionon "
-                value={opinion.text}
-                onChangeText={(value) => handleChange("text", value)}
-              />
-            </View>
-          </View>
-
-          <TouchableOpacity style={styles.button} onPress={onSubmit}>
-            <Text style={styles.buttonText}>Save</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    </View>
+    <Card style={{ margin: 5, marginTop: 20 }}>
+      <Card.Title
+        title="Add opinion"
+        right={() => (
+          <Button style={{ marginEnd: 10 }} mode="contained" onPress={onCancel}>
+            ←
+          </Button>
+        )}
+      />
+      <Card.Content>
+        <TextInput
+          label="Title"
+          placeholder="Title"
+          value={opinion.title}
+          onChangeText={(value) => handleChange("title", value)}
+        />
+        <Dropdown
+          title="Mark"
+          onChange={(value) => handleChange("mark", value)}
+          options={options}
+          currentValue={opinion.mark}
+        />
+        <TextInput
+          label={"Opinion"}
+          multiline
+          numberOfLines={4}
+          placeholder="Your opionon "
+          value={opinion.text}
+          onChangeText={(value) => handleChange("text", value)}
+        />
+      </Card.Content>
+      <Card.Actions>
+        <Button onPress={onSubmit}>Send</Button>
+      </Card.Actions>
+    </Card>
   );
 }
 

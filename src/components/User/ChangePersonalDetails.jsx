@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View, Text, TextInput, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
+
 import axiosInstance from "../../utils/axiosConfig";
 
-function ChangePersonalDetails() {
+function ChangePersonalDetails({ ...props }) {
   const [user, setUser] = useState({
     email: " ",
     firstName: " ",
@@ -24,27 +26,19 @@ function ChangePersonalDetails() {
   }, []);
 
   return (
-    <View>
-      <View style={styles.card}>
-        <Text style={styles.header}>PERSONAL DETAILS</Text>
-        <View style={styles.body}>
+    <>
+      <Card {...props}>
+        <Card.Title title="Personal Details" />
+        <Card.Content>
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>First Name</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="First name"
-                value={user.firstName}
-              />
+              <TextInput placeholder="First name" value={user.firstName} />
             </View>
             <View style={styles.inputGroup}>
               <Text>Last Name</Text>
 
-              <TextInput
-                style={styles.input}
-                placeholder="Last name"
-                value={user.lastName}
-              />
+              <TextInput placeholder="Last name" value={user.lastName} />
             </View>
           </View>
 
@@ -52,7 +46,6 @@ function ChangePersonalDetails() {
             <View style={styles.inputGroup}>
               <Text>User name</Text>
               <TextInput
-                style={styles.input}
                 placeholder="User name"
                 value={user.userName}
                 onChangeText={() => {}}
@@ -60,31 +53,22 @@ function ChangePersonalDetails() {
             </View>
             <View style={styles.inputGroup}>
               <Text>Phone Number</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Phone Number"
-                value={user.phoneNumber}
-              />
+              <TextInput placeholder="Phone Number" value={user.phoneNumber} />
             </View>
           </View>
 
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>Email</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={user.email}
-              />
+              <TextInput placeholder="Email" value={user.email} />
             </View>
           </View>
-
-          <View style={styles.inputGroup}>
-            <Button title="update personal data" />
-          </View>
-        </View>
-      </View>
-    </View>
+        </Card.Content>
+        <Card.Actions>
+          <Button mode="contained">Update personal data</Button>
+        </Card.Actions>
+      </Card>
+    </>
   );
 }
 
