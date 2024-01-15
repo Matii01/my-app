@@ -1,12 +1,6 @@
 import { StyleSheet, View } from "react-native";
-import {
-  Button,
-  Card,
-  Text,
-  Surface,
-  DataTable,
-  Divider,
-} from "react-native-paper";
+import { Button, Card, Text, Surface, Divider } from "react-native-paper";
+import AddToWishList from "./AddToWishlist";
 
 function CarCardForList({ car, navigation, wishlist }) {
   const handleCarClick = (id) => {
@@ -27,7 +21,10 @@ function CarCardForList({ car, navigation, wishlist }) {
     return (
       <Card style={{ margin: 5 }}>
         <Card.Cover source={{ uri: url }} />
-        <Card.Title title={car.name} />
+        <Card.Title
+          title={car.name}
+          right={() => <AddToWishList carId={car.id} wishlist={wishlist} />}
+        />
         <Card.Content>
           <View style={styles.row}>
             <View style={styles.column}>

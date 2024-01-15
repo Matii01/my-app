@@ -27,6 +27,7 @@ function CarsPage({ navigation }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [metaData, setMetaData] = useState();
   const [cars, setCars] = useState([]);
+  const [userWishList, setUserWishList] = useState([]);
   const [filterInfo, setFilterInfo] = useState({
     PageNumber: 1,
     PageSize: 10,
@@ -44,6 +45,7 @@ function CarsPage({ navigation }) {
 
   useEffect(() => {
     getFilteredCars();
+    getClientWishList();
   }, []);
 
   useEffect(() => {
@@ -64,6 +66,17 @@ function CarsPage({ navigation }) {
       })
       .join("");
     return obectToString.slice(0, obectToString.length - 1);
+  };
+
+  const getClientWishList = () => {
+    axiosInstance
+      .get("Wishlist")
+      .then((data) => {
+        setUserWishList(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const getFilteredCars = () => {
@@ -158,7 +171,7 @@ function CarsPage({ navigation }) {
           applayFilterClick={filterClick}
         />
       )}
-      <CarList cars={cars} navigation={navigation} />
+      <CarList cars={cars} navigation={navigation} wishlist={userWishList} />
       <Pagination paginationData={metaData} pageChange={onPageChange} />
     </ScrollView>
   );
