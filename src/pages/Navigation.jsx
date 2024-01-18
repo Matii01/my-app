@@ -8,6 +8,7 @@ import LoginPage from "./LoginPage";
 import { useSelector } from "react-redux";
 import MyComponent from "./AccountPage";
 import PageForTest from "./PageForTest";
+import NotificationsPage from "./NotificationsPage";
 
 function HomeScreen({ navigation }) {
   return (
@@ -16,14 +17,6 @@ function HomeScreen({ navigation }) {
         onPress={() => navigation.navigate("Notifications")}
         title="Go to notifications"
       />
-    </View>
-  );
-}
-
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
     </View>
   );
 }
@@ -41,10 +34,7 @@ export default function Navigation() {
           <Drawer.Navigator initialRouteName="Home">
             <Drawer.Screen name="Home" component={HomeScreen} />
             <Drawer.Screen name="Cars" component={CarStack} />
-            <Drawer.Screen
-              name="Notifications"
-              component={NotificationsScreen}
-            />
+            <Drawer.Screen name="Notifications" component={NotificationsPage} />
             <Drawer.Screen name="Account" component={MyComponent} />
             <Drawer.Screen name="For testing" component={PageForTest} />
           </Drawer.Navigator>
