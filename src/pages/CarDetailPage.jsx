@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, ScrollView, Image, StyleSheet } from "react-native";
+import { View, ScrollView, StyleSheet } from "react-native";
 import {
   Card,
   Text,
@@ -10,12 +10,8 @@ import {
   Portal,
 } from "react-native-paper";
 import axiosInstance from "../utils/axiosConfig";
-import TechDetailCard from "../components/Car/TechDetailCard";
 import Pricelist from "../components/Car/Pricelist";
 import CarOpinionList from "../components/Car/CarOpinion";
-import MyAccordion from "../components/AccordionComponent/MyAccordion";
-import BookCar from "../components/Car/BookCar";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import BookCarContent from "../components/Car/BookCarContent";
 
 function CarDetails({ route, navigation }) {
@@ -56,6 +52,7 @@ function CarDetails({ route, navigation }) {
                 carId={carId}
                 excludedDates={car.excludedDates}
                 navigation={navigation}
+                hide={hideModal}
               />
             </View>
           </Modal>

@@ -8,7 +8,13 @@ function CarCardForList({ car, navigation, wishlist }) {
   };
 
   const goToReservation = (id) => {
-    navigate(`/car/reservation/${id}`);
+    navigation.navigate("Rental", {
+      reservation: {
+        carId: car.id,
+        DateFrom: "",
+        DateTo: "",
+      },
+    });
   };
 
   if (car) {
@@ -84,8 +90,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10, // Optional for spacing
-    // Add additional styling as needed
+    padding: 10,
   },
 });
 

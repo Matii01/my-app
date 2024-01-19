@@ -5,7 +5,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import transformObjectToQueryString from "./../../utils/transformObjectToQueryString";
 import axiosInstance from "../../utils/axiosConfig";
 
-function BookCarContent({ carId, excludedDates, navigation, hide }) {
+function ChangeReservationData({ rentalData, setRentalData, hide }) {
   /// chooseData
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -14,13 +14,11 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
   /// chooseEnd
 
   /// bookCar
+  const [excludedDates, setExcludedDates] = useState([]);
+  const [reservationData, setReservationDate] = useState(rentalData);
   const [error, setError] = useState(false);
   const [cost, setCost] = useState("");
-  const [reservationData, setReservationDate] = useState({
-    carId: carId,
-    DateFrom: "",
-    DateTo: "",
-  });
+
   /// bookCarEnd
 
   /// chooseData
@@ -45,6 +43,20 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
     return formatted;
   };
   /// chooseEnd
+
+  useEffect(() => {
+    //takenDates/{int:id}
+    console.log(rentalData.CarId);
+    axiosInstance
+      .get(`/Rental/takenDates/${rentalData.CarId}`)
+      .then((data) => {
+        setExcludedDates(data.data);
+        console.log(data.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   /// BookCar
   useEffect(() => {
@@ -85,23 +97,16 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
   };
 
   const handleDate = (name, value) => {
-    console.log(name + " " + value);
     setReservationDate((prev) => ({
       ...prev,
       [name]: value,
     }));
   };
 
-  const onSubmit = () => {
-    console.log("new reservation ");
-    console.log(reservationData);
+  const onConfirmClick = () => {
+    setRentalData(reservationData);
     hide();
-    navigation.navigate("Rental", {
-      reservation: reservationData,
-      excludedDates: excludedDates,
-    });
   };
-  /// BookCarEnd
 
   return (
     <View style={styles.container}>
@@ -148,16 +153,14 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
           <DateTimePicker value={endDate} onChange={onEndDateChange} />
         )}
       </View>
-      <View style={styles.row}>
-        <Button mode="outlined" style={styles.btn} onPress={onSubmit}>
-          Book
-        </Button>
+      <View>
+        <Button onPress={onConfirmClick}>Confirm</Button>
       </View>
     </View>
   );
 }
 
-export default BookCarContent;
+export default ChangeReservationData;
 
 const styles = StyleSheet.create({
   container: {
