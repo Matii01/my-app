@@ -1,29 +1,63 @@
-import { Button, View } from "react-native";
-import { Card } from "react-native-paper";
+import { useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
+import {
+  Card,
+  Button,
+  Text,
+  DataTable,
+  Divider,
+  Portal,
+  Modal,
+} from "react-native-paper";
+import axiosInstance from "../utils/axiosConfig";
+import RecommendedCars from "../components/Car/RecomendedCars";
 
 function HomePage({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState({
+    homePageImage: "",
+    homePageTextOne: "",
+    homePageTextTwo: "",
+    homePageTitle: "",
+  });
+
+  useEffect(() => {
+    axiosInstance
+      .get(`/ContentManagement/homePage`)
+      .then((data) => {
+        console.log(data.data);
+        setPage(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  if (isLoading == true) {
+    return (
       <View>
-        <Card>
-          <Card.Title
-            title="Card Title"
-            subtitle="Card Subtitle"
-            left={LeftContent}
-          />
-          <Card.Content>
-            <Text variant="titleLarge">Card title</Text>
-            <Text variant="bodyMedium">Card content</Text>
-          </Card.Content>
-          <Card.Cover source={{ uri: "https://picsum.photos/700" }} />
-          <Card.Actions>
-            <Button>Cancel</Button>
-            <Button>Ok</Button>
-          </Card.Actions>
-        </Card>
+        <Text>Loading ... </Text>
       </View>
-      <View></View>
-    </View>
+    );
+  }
+
+  return (
+    <ScrollView>
+      <Card>
+        <Card.Cover source={{ uri: `${page.homePageImage}` }} />
+        <Card.Title />
+        <Card.Content>
+          <Text variant="titleLarge">{page.homePageTitle}</Text>
+          <Text variant="bodyMedium"></Text>
+        </Card.Content>
+        <Card.Content>
+          <Text>See recomended cars:</Text>
+          <RecommendedCars navigation={navigation} />
+        </Card.Content>
+        <Card.Actions></Card.Actions>
+      </Card>
+    </ScrollView>
   );
 }
 

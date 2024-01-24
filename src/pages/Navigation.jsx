@@ -9,6 +9,8 @@ import { useSelector } from "react-redux";
 import MyComponent from "./AccountPage";
 import PageForTest from "./PageForTest";
 import NotificationsPage from "./NotificationsPage";
+import HomePage from "./HomePage";
+import RegisterPage from "./RegisterPage";
 
 function HomeScreen({ navigation }) {
   return (
@@ -32,7 +34,7 @@ export default function Navigation() {
       {state.accessToken != null ? (
         <NavigationContainer>
           <Drawer.Navigator initialRouteName="Home">
-            <Drawer.Screen name="Home" component={HomeScreen} />
+            <Drawer.Screen name="Home" component={HomePage} />
             <Drawer.Screen name="Cars" component={CarStack} />
             <Drawer.Screen name="Notifications" component={NotificationsPage} />
             <Drawer.Screen name="Account" component={MyComponent} />
@@ -44,6 +46,7 @@ export default function Navigation() {
           <NavigationContainer>
             <Stack.Navigator initialRouteName="Login">
               <Stack.Screen name="Login" component={LoginPage} />
+              <Stack.Screen name="Register" component={RegisterPage} />
             </Stack.Navigator>
           </NavigationContainer>
         </>
