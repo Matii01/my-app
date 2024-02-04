@@ -3,7 +3,7 @@ import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Button, Text } from "react-native-paper";
 import axiosInstance from "../../utils/axiosConfig";
 import MyAccordion from "../AccordionComponent/MyAccordion";
-import Checkbox from "../Checkbox/Checkbox";
+import Checkbox from "../Checkbox/MyCheckbox";
 
 function CarFilter({ filterInfo, setFilterInfo, applayFilterClick }) {
   const [data, setData] = useState();
@@ -63,8 +63,10 @@ function CarFilter({ filterInfo, setFilterInfo, applayFilterClick }) {
             data.carMakes.map((item) => (
               <View key={item.id}>
                 <Checkbox
+                  itemId={item.id}
                   text={item.name}
                   onPress={() => handleCheckboxChange("MakeId", item.id)}
+                  selectedCheckbox={filterInfo.MakeId}
                 />
               </View>
             ))}
@@ -74,8 +76,10 @@ function CarFilter({ filterInfo, setFilterInfo, applayFilterClick }) {
             data.gearboxType.map((item) => (
               <View key={item.id}>
                 <Checkbox
+                  itemId={item.id}
                   text={item.name}
                   onPress={() => handleCheckboxChange("GearboxTypeId", item.id)}
+                  selectedCheckbox={filterInfo.GearboxTypeId}
                 />
               </View>
             ))}
@@ -85,8 +89,10 @@ function CarFilter({ filterInfo, setFilterInfo, applayFilterClick }) {
             data.engineType.map((item) => (
               <View key={item.id}>
                 <Checkbox
+                  itemId={item.id}
                   text={item.name}
                   onPress={() => handleCheckboxChange("EngineTypeId", item.id)}
+                  selectedCheckbox={filterInfo.EngineTypeId}
                 />
               </View>
             ))}
@@ -96,14 +102,33 @@ function CarFilter({ filterInfo, setFilterInfo, applayFilterClick }) {
             data.carType.map((item) => (
               <View key={item.id}>
                 <Checkbox
+                  itemId={item.id}
                   text={item.name}
                   onPress={() => handleCheckboxChange("CarTypeId", item.id)}
+                  selectedCheckbox={filterInfo.CarTypeId}
+                />
+              </View>
+            ))}
+        </MyAccordion>
+        <MyAccordion title="Vehicle Equipment">
+          {data &&
+            data.carEquipment.map((item) => (
+              <View key={item.id}>
+                <Checkbox
+                  itemId={item.id}
+                  text={item.name}
+                  onPress={() =>
+                    handleCheckboxChange("CarEquipmentId", item.id)
+                  }
+                  selectedCheckbox={filterInfo.CarEquipmentId}
                 />
               </View>
             ))}
         </MyAccordion>
         <View style={styles.button}>
-          <Button title="Applay filters" onPress={applayFilters} />
+          <Button mode="contained" onPress={applayFilters}>
+            Applay filters
+          </Button>
         </View>
       </View>
     </>
@@ -134,6 +159,8 @@ const styles = StyleSheet.create({
     // Checkbox label styles
   },
   button: {
+    marginTop: 10,
+    marginBottom: 10,
     paddingStart: 10,
     paddingEnd: 10,
   },

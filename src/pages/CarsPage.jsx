@@ -38,6 +38,7 @@ function CarsPage({ navigation }) {
     EngineTypeId: [],
     CarTypeId: [],
     MakeId: [],
+    CarEquipmentId: [],
     PriceMin: null,
     PriceMax: null,
     MinSeatsNum: null,
@@ -172,6 +173,11 @@ function CarsPage({ navigation }) {
         />
       )}
       <CarList cars={cars} navigation={navigation} wishlist={userWishList} />
+      {cars && cars.length == 0 && (
+        <View>
+          <Text style={row.text}>No cars for given filters</Text>
+        </View>
+      )}
       <Pagination paginationData={metaData} pageChange={onPageChange} />
     </ScrollView>
   );
@@ -189,6 +195,11 @@ const row = StyleSheet.create({
   col2: {
     justifyContent: "center",
     alignContent: "center",
+  },
+  text: {
+    textAlign: "center",
+    margin: 5,
+    fontSize: 25,
   },
 });
 
