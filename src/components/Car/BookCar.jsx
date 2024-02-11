@@ -16,8 +16,8 @@ function BookCar({ carId, excludedDates, navigation }) {
   useEffect(() => {
     if (reservationData.DateFrom < reservationData.DateTo) {
       console.log(reservationData);
-      checkPrice();
       isDatesValid();
+      checkPrice();
     }
   }, [reservationData.DateFrom, reservationData.DateTo]);
 
@@ -27,24 +27,33 @@ function BookCar({ carId, excludedDates, navigation }) {
     axiosInstance
       .get(`Rental/CheckPriceForClient?${queryString}`)
       .then((data) => {
+        console.log("ok: ");
         setCost(data.data);
+        console.log(data.data);
         setError(false);
       })
       .catch((error) => {
+        console.log("error");
         setError(true);
         console.log(error);
+      })
+      .finally(() => {
+        console.log("end");
       });
   };
 
   const isDatesValid = () => {
+    console.log("check dates");
     excludedDates.forEach((element) => {
       if (
         new Date(reservationData.DateFrom) <= new Date(element.rentalStart) &&
         new Date(reservationData.DateTo) >= new Date(element.rentalEnd)
       ) {
         setError(true);
+        console.log("date error");
         return;
       } else {
+        console.log("date ok");
         setError(false);
       }
     });

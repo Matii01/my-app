@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { Button, DataTable, Divider } from "react-native-paper";
+import { Button, DataTable, Divider, Text } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import transformObjectToQueryString from "./../../utils/transformObjectToQueryString";
 import axiosInstance from "../../utils/axiosConfig";
@@ -61,8 +61,10 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
     axiosInstance
       .get(`Rental/CheckPriceForClient?${queryString}`)
       .then((data) => {
+        console.log(data.data);
         setCost(data.data);
-        setError(false);
+
+        //setError(false);
       })
       .catch((error) => {
         setError(true);
@@ -71,17 +73,26 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
   };
 
   const isDatesValid = () => {
+    let errorCount = 0;
+    console.log(excludedDates);
     excludedDates.forEach((element) => {
       if (
-        new Date(reservationData.DateFrom) <= new Date(element.rentalStart) &&
-        new Date(reservationData.DateTo) >= new Date(element.rentalEnd)
+        !(
+          (new Date(reservationData.DateFrom) > new Date(element.rentalEnd) &&
+            new Date(reservationData.DateTo) > new Date(element.rentalEnd)) ||
+          (new Date(reservationData.DateFrom) < new Date(element.rentalStart) &&
+            new Date(reservationData.DateTo) < new Date(element.rentalStart))
+        )
       ) {
-        setError(true);
-        return;
-      } else {
-        setError(false);
+        errorCount++;
       }
     });
+
+    if (errorCount > 0) {
+      setError(true);
+    } else {
+      setError(false);
+    }
   };
 
   const handleDate = (name, value) => {
@@ -123,6 +134,7 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
           <Divider />
         </DataTable>
       </View>
+      <View>{error && <Text>The dates are busy, select others</Text>}</View>
       <View style={styles.row}>
         <Button
           mode="contained"
@@ -148,8 +160,14 @@ function BookCarContent({ carId, excludedDates, navigation, hide }) {
           <DateTimePicker value={endDate} onChange={onEndDateChange} />
         )}
       </View>
+      <View>{cost && <Text style={styles.text}>Price: {cost}</Text>}</View>
       <View style={styles.row}>
-        <Button mode="outlined" style={styles.btn} onPress={onSubmit}>
+        <Button
+          mode="outlined"
+          style={styles.btn}
+          onPress={onSubmit}
+          disabled={error === true}
+        >
           Book
         </Button>
       </View>
@@ -177,4 +195,5 @@ const styles = StyleSheet.create({
     borderCurve: "circular",
     borderColor: "black",
   },
+  text: { padding: 5, paddingStart: 10, fontSize: 25 },
 });

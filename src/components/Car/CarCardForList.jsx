@@ -60,8 +60,10 @@ function CarCardForList({ car, navigation, wishlist }) {
           <Divider bold style={{ marginTop: 5, marginBottom: 20 }} />
         </Card.Content>
         <Card.Actions>
-          <Button onPress={() => handleCarClick(car.id)}>Details</Button>
-          <Button onPress={() => goToReservation(car.id)}>Rental</Button>
+          <Button mode="contained" onPress={() => handleCarClick(car.id)}>
+            Details
+          </Button>
+          {/* <Button onPress={() => goToReservation(car.id)}>Rental</Button> */}
         </Card.Actions>
       </Card>
     );

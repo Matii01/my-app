@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import Pagination from "../Pagination/Pagination";
+import { useEffect, useState } from "react";
 
-function UserRentalList({ items, onDetailsClick }) {
+function UserRentalList({ items, onDetailsClick, paginationData, pageChange }) {
   const goToDetails = (id) => {
     onDetailsClick(id);
   };
@@ -22,7 +24,12 @@ function UserRentalList({ items, onDetailsClick }) {
 
   const list = items.map((item) => renderItem({ item }));
 
-  return <ScrollView>{list}</ScrollView>;
+  return (
+    <ScrollView>
+      {list}
+      <Pagination paginationData={paginationData} pageChange={pageChange} />
+    </ScrollView>
+  );
 }
 
 export default UserRentalList;

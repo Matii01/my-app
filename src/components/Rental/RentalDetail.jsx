@@ -53,6 +53,7 @@ function RentalDetail({ reservation, navigation }) {
   };
 
   const handlePayPress = async () => {
+    console.log(allRentalData);
     try {
       const clientSecret = await fetchPaymentIntentClientSecret();
       const { paymentIntent, error } = await confirmPayment(clientSecret, {
@@ -66,7 +67,7 @@ function RentalDetail({ reservation, navigation }) {
         navigation.navigate("RentalConfirm", { paymentId: paymentIntent.id });
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   };
 
@@ -167,7 +168,7 @@ function RentalDetail({ reservation, navigation }) {
             />
           </Card.Content>
           <Card.Actions>
-            <Button mode="contained" onPress={(onPress = { handlePayPress })}>
+            <Button mode="contained" onPress={handlePayPress}>
               PAY
             </Button>
           </Card.Actions>
