@@ -11,7 +11,7 @@ function LoginPage({ navigation }) {
   const dispatch = useDispatch();
   const [loginError, setLoginError] = useState("");
   const [loginData, setLoginData] = useState({
-    username: "ATestowy",
+    username: "dad4@op.pl",
     password: "Pa$$w0rd",
   });
 

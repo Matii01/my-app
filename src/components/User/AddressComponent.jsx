@@ -109,7 +109,7 @@ function AddressComponent({ address, onAdd }) {
               <TextInput
                 label="Address 2"
                 placeholder="Address 2"
-                onChangeText={(text) => handleChange("address1", text)}
+                onChangeText={(text) => handleChange("address2", text)}
                 value={updateAddress.address2}
               />
             </View>

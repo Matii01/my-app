@@ -5,7 +5,6 @@ import axiosInstance from "../utils/axiosConfig";
 
 function RegisterPage({ navigation }) {
   const initialState = {
-    userName: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -14,6 +13,7 @@ function RegisterPage({ navigation }) {
     confirm: "",
   };
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
   const [newUser, setNewUser] = useState(initialState);
 
   const handleSubmit = () => {
@@ -32,6 +32,9 @@ function RegisterPage({ navigation }) {
       ...prevState,
       [name]: value,
     }));
+    if (name === "email") {
+      setError("");
+    }
   };
 
   const handlePhoneNumber = (value) => {
@@ -81,7 +84,8 @@ function RegisterPage({ navigation }) {
         console.log(data);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.message);
+        setError("This email is used");
       });
   };
 
@@ -117,21 +121,12 @@ function RegisterPage({ navigation }) {
             <View style={styles.row}>
               <View style={styles.inputGroup}>
                 <TextInput
-                  label="User name"
-                  placeholder="User Name"
-                  onChangeText={(text) => handleChange("userName", text)}
-                  value={newUser.userName}
-                />
-              </View>
-            </View>
-            <View style={styles.row}>
-              <View style={styles.inputGroup}>
-                <TextInput
                   label="Email"
                   placeholder="Email"
                   onChangeText={(text) => handleChange("email", text)}
                   value={newUser.email}
                 />
+                {error && <Text style={{ color: "red" }}>{error}</Text>}
               </View>
             </View>
             <View style={styles.row}>
