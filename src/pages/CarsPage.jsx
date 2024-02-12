@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, StyleSheet } from "react-native";
-import { Button, ToggleButton } from "react-native-paper";
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-paper";
 import CarList from "../components/Car/CarList";
 import axiosInstance from "../utils/axiosConfig";
 import { ScrollView } from "react-native-gesture-handler";
@@ -70,7 +70,6 @@ function CarsPage({ navigation }) {
     setIsLoading(true);
     const queryString = transformObjectToQueryString(filterInfo);
 
-    //axios.get()
     axiosInstance
       .get(`/car/cars?${queryString}`)
       .then((response) => {

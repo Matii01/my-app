@@ -3,6 +3,7 @@ import CarsPage from "./CarsPage";
 import CarDetails from "./CarDetailPage";
 import RentalPage from "./RentalPage";
 import RentalConfirmation from "./RentalConfirmation";
+import { Button } from "react-native-paper";
 
 const Stack = createStackNavigator();
 
@@ -17,7 +18,14 @@ function CarStack() {
       <Stack.Screen
         name="CarDetails"
         component={CarDetails}
-        options={{ title: "Cars Details" }}
+        options={({ navigation }) => ({
+          title: "Car Details",
+          headerRight: () => (
+            <Button onPress={() => navigation.navigate("CarsPage")}>
+              Go to all cars
+            </Button>
+          ),
+        })}
       />
       <Stack.Screen
         name="Rental"
