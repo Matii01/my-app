@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
 
 import axiosInstance from "../../utils/axiosConfig";
@@ -16,13 +16,36 @@ function ChangePersonalDetails({ ...props }) {
     axiosInstance
       .get("Users/UserPersonalDetails")
       .then((data) => {
-        console.log(data);
         setUser(data.data);
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const handleChange = (name, value) => {
+    setUser((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    axiosInstance
+      .post("Users/UpdatePersonalDetails", JSON.stringify(user), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((data) => {
+        console.log(data);
+        setUser(data.data);
+        ToastAndroid.show("Data has been updated", ToastAndroid.SHORT);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <>
@@ -32,19 +55,31 @@ function ChangePersonalDetails({ ...props }) {
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>First Name</Text>
-              <TextInput placeholder="First name" value={user.firstName} />
+              <TextInput
+                placeholder="First name"
+                value={user.firstName}
+                onChangeText={(value) => handleChange("firstName", value)}
+              />
             </View>
             <View style={styles.inputGroup}>
               <Text>Last Name</Text>
 
-              <TextInput placeholder="Last name" value={user.lastName} />
+              <TextInput
+                placeholder="Last name"
+                value={user.lastName}
+                onChangeText={(value) => handleChange("lastName", value)}
+              />
             </View>
           </View>
 
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>Phone Number</Text>
-              <TextInput placeholder="Phone Number" value={user.phoneNumber} />
+              <TextInput
+                placeholder="Phone Number"
+                value={user.phoneNumber}
+                onChangeText={(value) => handleChange("phoneNumber", value)}
+              />
             </View>
           </View>
 
@@ -56,7 +91,9 @@ function ChangePersonalDetails({ ...props }) {
           </View>
         </Card.Content>
         <Card.Actions>
-          <Button mode="contained">Update personal data</Button>
+          <Button mode="contained" onPress={handleSubmit}>
+            Update personal data
+          </Button>
         </Card.Actions>
       </Card>
     </>

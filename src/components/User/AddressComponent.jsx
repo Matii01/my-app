@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
-import { View, TouchableOpacity, StyleSheet, Switch } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Switch,
+  ToastAndroid,
+} from "react-native";
 import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
 
 import { ScrollView } from "react-native-gesture-handler";
@@ -51,6 +57,7 @@ function AddressComponent({ address, onAdd }) {
         }
       )
       .then((data) => {
+        ToastAndroid.show("Data has been updated", ToastAndroid.SHORT);
         console.log(data);
         onAdd();
       });

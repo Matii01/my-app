@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import axiosInstance from "../../utils/axiosConfig";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, ToastAndroid, View } from "react-native";
 import { Button, Card, Text, TextInput, Divider } from "react-native-paper";
 
 function ChangePasword({ ...props }) {
@@ -17,31 +17,33 @@ function ChangePasword({ ...props }) {
       ...prev,
       [name]: value,
     }));
+    setError("");
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(data);
-
-    if (data.newPassword != data.retypePassword) {
-      console.log("passwords are different");
+  const handleSubmit = () => {
+    if (
+      data.newPassword === "" ||
+      data.oldPassword === "" ||
+      data.retypePassword === ""
+    ) {
+      setError("complete all fields");
+    } else if (data.newPassword != data.retypePassword) {
+      setError("passwords are different");
     } else {
       updatePassword();
     }
   };
 
   const updatePassword = () => {
+    console.log(data);
     axiosInstance
-      .post(
-        "https://localhost:7091/Users/ChangePassword",
-        JSON.stringify(data),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .post("Users/ChangePassword", JSON.stringify(data), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
+        ToastAndroid.show("Password has been changed", ToastAndroid.SHORT);
         console.log(response);
         if (response.status === 200) {
           setError("");
@@ -55,7 +57,7 @@ function ChangePasword({ ...props }) {
   };
 
   const onUpdateClick = () => {
-    console.log(data);
+    handleSubmit();
   };
 
   return (
@@ -94,6 +96,7 @@ function ChangePasword({ ...props }) {
               />
             </View>
           </View>
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
           <Card.Actions>
             <Button mode="contained" onPress={onUpdateClick}>
               Change password

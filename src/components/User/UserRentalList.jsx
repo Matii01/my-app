@@ -1,7 +1,6 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import Pagination from "../Pagination/Pagination";
-import { useEffect, useState } from "react";
 
 function UserRentalList({ items, onDetailsClick, paginationData, pageChange }) {
   const goToDetails = (id) => {
