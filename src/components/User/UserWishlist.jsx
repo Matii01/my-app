@@ -19,7 +19,12 @@ function UserWishList({ navigation }) {
   }, []);
 
   const goToDetails = (id) => {
-    navigation.navigate("CarDetails", { carId: id });
+    navigation.navigate("Cars", {
+      screen: "CarDetails",
+      params: {
+        carId: id,
+      },
+    });
   };
 
   const removeFromList = (id) => {

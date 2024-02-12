@@ -8,20 +8,6 @@ import CarFilter from "../components/Filters/CarFilters";
 import Dropdown from "../components/Dropdown/Dropdown";
 import Pagination from "../components/Pagination/Pagination";
 
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 50,
-  },
-  tinyLogo: {
-    width: 50,
-    height: 50,
-  },
-  logo: {
-    width: 66,
-    height: 58,
-  },
-});
-
 function CarsPage({ navigation }) {
   const [isLoading, setIsLoading] = useState(true);
   const [isFilterOpen, setIsFilterOpen] = useState(false);

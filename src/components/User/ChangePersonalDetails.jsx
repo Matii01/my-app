@@ -10,7 +10,6 @@ function ChangePersonalDetails({ ...props }) {
     firstName: " ",
     lastName: " ",
     phoneNumber: " ",
-    userName: " ",
   });
 
   useEffect(() => {
@@ -44,14 +43,6 @@ function ChangePersonalDetails({ ...props }) {
 
           <View style={styles.row}>
             <View style={styles.inputGroup}>
-              <Text>User name</Text>
-              <TextInput
-                placeholder="User name"
-                value={user.userName}
-                onChangeText={() => {}}
-              />
-            </View>
-            <View style={styles.inputGroup}>
               <Text>Phone Number</Text>
               <TextInput placeholder="Phone Number" value={user.phoneNumber} />
             </View>
@@ -60,7 +51,7 @@ function ChangePersonalDetails({ ...props }) {
           <View style={styles.row}>
             <View style={styles.inputGroup}>
               <Text>Email</Text>
-              <TextInput placeholder="Email" value={user.email} />
+              <TextInput disabled placeholder="Email" value={user.email} />
             </View>
           </View>
         </Card.Content>

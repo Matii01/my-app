@@ -21,7 +21,12 @@ function RecommendedCars({ navigation }) {
   }, []);
 
   const handleCarClick = (id) => {
-    navigation.navigate("CarDetails", { carId: id });
+    navigation.navigate("Cars", {
+      screen: "CarDetails",
+      params: {
+        carId: id,
+      },
+    });
   };
 
   if (isLoading == true) {
