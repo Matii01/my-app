@@ -87,7 +87,18 @@ function CarDetails({ route, navigation }) {
             <Button onPress={showModal}>Book</Button>
           </Card.Actions>
         </Card>
-
+        <View>
+          <Card>
+            <Card.Title title="Car equipment" />
+            <Card.Content>
+              {car.carEquipment &&
+                car.carEquipment.length > 0 &&
+                car.carEquipment.map((it) => (
+                  <Text key={it.id}>{it.name}</Text>
+                ))}
+            </Card.Content>
+          </Card>
+        </View>
         <View>
           <Pricelist id={carId} />
         </View>
