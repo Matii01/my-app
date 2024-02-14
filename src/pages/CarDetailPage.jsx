@@ -13,16 +13,26 @@ import axiosInstance from "../utils/axiosConfig";
 import Pricelist from "../components/Car/Pricelist";
 import CarOpinionList from "../components/Car/CarOpinion";
 import BookCarContent from "../components/Car/BookCarContent";
+import AdditionalImg from "../components/Car/AdditionalImg";
 
 function CarDetails({ route, navigation }) {
   const { carId } = route.params;
   const [car, setCar] = useState({});
+  const [carImages, setCarImages] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [showPhoto, setShowPhoto] = useState(false);
+
   useEffect(() => {
     axiosInstance
       .get(`Car/details/${carId}`)
       .then((data) => {
         setCar(data.data);
+        setCarImages([
+          data.data.pictureUrl,
+          ...data.data.carImages.map((it) => {
+            return it.imgUrl;
+          }),
+        ]);
       })
       .catch((error) => {
         console.log(error);
@@ -37,7 +47,11 @@ function CarDetails({ route, navigation }) {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const showAdditionalPhoto = () => setShowPhoto(true);
+  const hidePhotos = () => setShowPhoto(false);
+
   const containerStyle = { backgroundColor: "white", padding: 20, margin: 20 };
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -54,6 +68,15 @@ function CarDetails({ route, navigation }) {
                 navigation={navigation}
                 hide={hideModal}
               />
+            </View>
+          </Modal>
+          <Modal
+            visible={showPhoto}
+            onDismiss={hidePhotos}
+            contentContainerStyle={containerStyle}
+          >
+            <View style={{ height: "75%" }}>
+              <AdditionalImg imgs={carImages} />
             </View>
           </Modal>
         </Portal>
@@ -84,6 +107,7 @@ function CarDetails({ route, navigation }) {
             <Text variant="bodyMedium">{car.description}</Text>
           </Card.Content>
           <Card.Actions>
+            <Button onPress={setShowPhoto}>More photo</Button>
             <Button onPress={showModal}>Book</Button>
           </Card.Actions>
         </Card>
